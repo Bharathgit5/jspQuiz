@@ -1,21 +1,18 @@
-// BoysBuzzer.js (similar for GirlsBuzzer.js)
-import React from "react";
-
+// BoysBuzzer.js
 export default function BoysBuzzer() {
   const handleBuzz = () => {
-    const buzzData = {
+    localStorage.setItem("buzzerData", JSON.stringify({
       team: "boys",
-      time: Date.now(), // helps trigger event even if same team buzzes again
-    };
-    localStorage.setItem("buzzerData", JSON.stringify(buzzData));
+      time: new Date().getTime(), // Force update even if same team
+    }));
   };
 
   return (
-    <div className="p-10 text-center">
-      <h2 className="text-2xl font-bold mb-4">BOYS BUZZER</h2>
+    <div className="text-center mt-20">
+      <h1 className="text-3xl font-bold mb-6">Boys Buzzer</h1>
       <button
         onClick={handleBuzz}
-        className="bg-blue-600 text-white px-6 py-4 rounded-xl text-xl"
+        className="bg-blue-600 text-white px-10 py-4 rounded-xl text-2xl"
       >
         BUZZ!
       </button>
