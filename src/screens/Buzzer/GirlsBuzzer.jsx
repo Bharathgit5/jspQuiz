@@ -1,16 +1,21 @@
-export default function GirlsBuzzer() {
-  const channel = new BroadcastChannel("quiz-buzzer");
+// BoysBuzzer.js (similar for GirlsBuzzer.js)
+import React from "react";
 
+export default function GirlsBuzzer() {
   const handleBuzz = () => {
-    channel.postMessage({ team: "girls" });
+    const buzzData = {
+      team: "girls",
+      time: Date.now(), // helps trigger event even if same team buzzes again
+    };
+    localStorage.setItem("buzzerData", JSON.stringify(buzzData));
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-pink-50">
-      <h1 className="text-3xl font-bold mb-6">Girls Team</h1>
+    <div className="p-10 text-center">
+      <h2 className="text-2xl font-bold mb-4">GIRLS BUZZER</h2>
       <button
         onClick={handleBuzz}
-        className="bg-pink-600 text-white text-2xl px-8 py-6 rounded-xl"
+        className="bg-pink-600 text-white px-6 py-4 rounded-xl text-xl"
       >
         BUZZ!
       </button>

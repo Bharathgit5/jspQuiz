@@ -12,24 +12,21 @@ export default function QuizPlay() {
   const [timer, setTimer] = useState(0);
   const navigate = useNavigate();
 
-  // Only first team to buzz will trigger this
-  useEffect(() => {
-    const channel = new BroadcastChannel("quiz-buzzer");
-
-    channel.onmessage = (event) => {
-      const team = event.data.team;
-
-      // ✅ Only allow first buzz
-      if (!buzzerTeam) {
-        setBuzzerTeam(team);
+ useEffect(() => {
+  const handleStorage = (event) => {
+    if (event.key === "buzzerData") {
+      const data = JSON.parse(event.newValue);
+      if (!buzzerTeam && data) {
+        setBuzzerTeam(data.team);
         setTimer(10);
       }
-    };
+    }
+  };
 
-    return () => {
-      channel.close();
-    };
-  }, [buzzerTeam]);
+  window.addEventListener("storage", handleStorage);
+  return () => window.removeEventListener("storage", handleStorage);
+}, [buzzerTeam]);
+
 
   // Countdown timer
   useEffect(() => {
