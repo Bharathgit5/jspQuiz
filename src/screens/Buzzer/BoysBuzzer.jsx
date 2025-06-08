@@ -1,20 +1,20 @@
-// BoysBuzzer.js
+import React from "react";
+import { database, ref, set } from "../../firebase"; // adjust the path if needed
+
 export default function BoysBuzzer() {
   const handleBuzz = () => {
-    localStorage.setItem("buzzerData", JSON.stringify({
-      team: "boys",
-      time: new Date().getTime(), // Force update even if same team
-    }));
+    set(ref(database, "buzzerData"), { team: "boys" })
+      .then(() => console.log("Buzz recorded"))
+      .catch((error) => console.error("Error writing buzzerData:", error));
   };
 
   return (
-    <div className="text-center mt-20">
-      <h1 className="text-3xl font-bold mb-6">Boys Buzzer</h1>
+    <div className="flex justify-center items-center h-screen bg-blue-100">
       <button
         onClick={handleBuzz}
-        className="bg-blue-600 text-white px-10 py-4 rounded-xl text-2xl"
+        className="bg-blue-600 text-white px-6 py-3 text-xl rounded-xl hover:bg-blue-700"
       >
-        BUZZ!
+        🧢 Boys Buzz!
       </button>
     </div>
   );
